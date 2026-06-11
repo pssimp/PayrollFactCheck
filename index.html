@@ -562,18 +562,20 @@ function handleCardClick(event, emp) {
             solvedIds.add(selectedEmployee.id);
             localStorage.setItem('payroll_solved_ids', JSON.stringify(Array.from(solvedIds)));
 
-            fetch("/", {
+// Ide másold be a Google Scripttől kapott teljes URL-t!
+            const googleScriptUrl = https://script.google.com/macros/s/AKfycby3lEkmcpL7sL8orGydN9vD6COnmh_015D9ucK8e-7YxTtCKFUasLIIPVQhf9PAkPgM/exec;
+
+            fetch(googleScriptUrl, {
                 method: "POST",
+                mode: "no-cors", // Biztonság miatt kell, hogy ne akadjon el a böngészőben
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({
-                    "form-name": "payroll-logs-v2",
                     "player_name": playerName,
                     "employee_target": selectedEmployee.name,
                     "selected_option": btn.innerText,
                     "is_correct": isCorrect ? "Helyes" : "Helytelen"
                 }).toString()
-            });
-
+            }).catch(err => console.error("Mentési hiba:", err));
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach(b => {
                 if (b.innerText === selectedEmployee.trueFact) b.classList.add('correct-reveal');
