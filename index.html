@@ -6,9 +6,9 @@
     <title>Payroll Fact Check</title>
     <style>
         :root {
-            /* MÓDOSÍTVA: Sötétebb kék a jobb kontrasztért világos háttéren */
+            /* Sötétebb kék a jobb kontrasztért világos háttéren */
             --ps-blue: #0f1a4a;
-            /* MÓDOSÍTVA: Kicsit sötétebb arany/narancs a jobb olvashatóságért */
+            /* Kicsit sötétebb arany/narancs a jobb olvashatóságért */
             --ps-gold: #e6a817; 
             --correct-bg: #27ae60;
             --wrong-bg: #e74c3c;
@@ -23,24 +23,21 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            /* MÓDOSÍTVA: Alapértelmezett szövegszín sötétkék */
             color: var(--ps-blue);
             padding-top: 20px;
             position: relative;
             overflow-x: hidden;
-            /* ÚJ: Háttérkép beállítása */
             background-image: url('light.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Opcionális: görgetéskor fix marad */
+            background-attachment: fixed;
         }
 
         /* LOGIN SCREEN */
         #login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* MÓDOSÍTVA: Enyhe áttetszőség, hogy látszódjon a háttér */
             background: rgba(15, 26, 74, 0.95);
             z-index: 1000;
             display: flex;
@@ -56,20 +53,15 @@
         }
 
         .login-box {
-            /* MÓDOSÍTVA: Fehér háttér a jobb olvashatóságért az overlay-en */
             background: white;
             padding: 40px;
             border-radius: 20px;
-            /*backdrop-filter: blur(12px) saturate(120%);*/ /* Már nem szükséges fehér háttérrel */
-	        /*-webkit-backdrop-filter: blur(12px) saturate(120%);*/
             text-align: center;
             border: 1px solid var(--ps-gold);
             animation: slideInDown 0.5s ease-out;
-            /* ÚJ: Árnyék a doboz kiemeléséhez */
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        /* MÓDOSÍTVA: Szövegszín a login boxban */
         .login-box h2, .login-box p {
             color: var(--ps-blue);
         }
@@ -78,7 +70,6 @@
             padding: 12px;
             width: 250px;
             border-radius: 8px;
-            /* MÓDOSÍTVA: Szegély hozzáadása */
             border: 1px solid #ccc;
             margin-bottom: 20px;
             font-size: 1rem;
@@ -88,7 +79,6 @@
         .login-box button {
             padding: 12px 30px;
             background: var(--ps-gold);
-            /* MÓDOSÍTVA: Szövegszín a gombon */
             color: white;
             border: none;
             border-radius: 8px;
@@ -98,7 +88,6 @@
             transition: transform 0.1s ease, background-color 0.2s ease;
         }
 
-        /* ÚJ: Hover effekt a gombra */
         .login-box button:hover {
             background-color: #d19915;
         }
@@ -108,24 +97,19 @@
         }
 
         /* JÁTÉK ELEMEI */
-.game-header h1 {
-    font-size: 2.5rem;
-    margin: 0;
-    /* MÓDOSÍTVA: Fehér szín a maximális kontrasztért */
-    color: #ffffff; 
-    text-transform: uppercase;
-    /* MÓDOSÍTVA: Arany árnyék a brand színek megőrzéséhez és a jobb olvashatóságért */
-    text-shadow: 2px 2px 10px var(--ps-gold), 0px 0px 15px rgba(0,0,0,0.8);
-}
+        .game-header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: #ffffff; 
+            text-transform: uppercase;
+            text-shadow: 2px 2px 10px var(--ps-gold), 0px 0px 15px rgba(0,0,0,0.8);
+        }
 
-.game-header p {
-    color: var(--ps-blue);
-    font-weight: bold;
-    /* Fehér körvonal a sötétkék szövegnek */
-    text-shadow: 0 0 5px white;
-}
-        /* ÚJ: Alcím stílusa */
-        .game-header p { color: var(--ps-blue); font-weight: 600; }
+        .game-header p {
+            color: var(--ps-blue);
+            font-weight: bold;
+            text-shadow: 0 0 5px white;
+        }
 
         #tablo-view {
             display: grid;
@@ -133,84 +117,82 @@
             gap: 20px; width: 90%; max-width: 1100px; padding: 20px;
         }
 
-.person-card {
-    background: rgba(255, 255, 255, 0.9); 
-    border-radius: 12px; 
-    padding: 15px;
-    border: 1px solid rgba(0,0,0,0.1);
-    position: relative; 
-    overflow: hidden; 
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        .person-card {
+            background: rgba(255, 255, 255, 0.9); 
+            border-radius: 12px; 
+            padding: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+            position: relative; 
+            overflow: hidden; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;     /* Ez húzza vízszintes középre az összes elemet */
-    justify-content: flex-start;
-}
         .person-card.active:active {
             transform: scale(0.98) !important;
-            /* MÓDOSÍTVA: Háttérszín kattintáskor */
             background: rgba(255, 255, 255, 1);
         }
 
-.person-card.active:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
+        .person-card.active:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
 
         .person-card.active { 
             pointer-events: auto; 
             cursor: pointer; 
             border-color: var(--ps-gold); 
-            /* MÓDOSÍTVA: Háttérszín aktív állapotban */
             background: rgba(255, 255, 255, 0.95);
             transform: scale(1.05); 
-            /* ÚJ: Kiemeltebb árnyék aktív állapotban */
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
         
-        .person-card.completed { opacity: 0.6; filter: grayscale(80%); pointer-events: none; }
+        .person-card.completed { opacity: 0.85; pointer-events: none; }
+        
         .person-card.completed::after { 
-    content: "✓"; 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); /* Ez a sor kritikus a tökéletes középponthoz! */
-    font-size: 3rem; 
-    color: var(--ps-gold); 
-    font-weight: bold; 
-    text-shadow: 0 0 5px rgba(0,0,0,0.5); 
-}
+            content: "✓"; 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            font-size: 3rem; 
+            color: var(--ps-gold); 
+            font-weight: bold; 
+            text-shadow: 0 0 5px rgba(0,0,0,0.5); 
+        }
+
         .person-card.locked {
-    opacity: 0.7;
-    filter: grayscale(100%); /* Add this */
-    background: rgba(240, 240, 240, 0.9);
-}
+            opacity: 0.7;
+            filter: grayscale(100%);
+            background: rgba(240, 240, 240, 0.9);
+        }
 
-.person-card.locked img {
-    filter: blur(5px) grayscale(100%);
-    opacity: 0.5;
-}
+        .person-card.locked img {
+            filter: blur(5px) grayscale(100%);
+            opacity: 0.5;
+        }
 
-.person-card.locked::after {
-    content: "?";
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3.5rem;
-    /* Módosítva: Sötétkék kérdőjel a jobb láthatóságért */
-    color: var(--ps-blue);
-    font-weight: bold;
-    text-shadow: 0 0 10px white; /* Fehér ragyogás a sötétkék betű körül */
-}
+        .person-card.locked::after {
+            content: "?";
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3.5rem;
+            color: var(--ps-blue);
+            font-weight: bold;
+            text-shadow: 0 0 10px white;
+        }
 
-.person-card.locked span {
-    color: #888; /* Szürke név az inaktívaknál */
-}
+        .person-card.locked span {
+            color: #888;
+        }
+
         .person-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--ps-gold); }
-        /* MÓDOSÍTVA: Név színe sötétkék */
         .person-card span { display: block; margin-top: 8px; font-size: 0.9rem; font-weight: 600; color: var(--ps-blue); }
 
         /* QUIZ OVERLAY */
@@ -227,19 +209,15 @@
 
         .quiz-container { 
             width: 90%; max-width: 500px; 
-            /* MÓDOSÍTVA: Fehér háttér */
             background: white;
             padding: 30px; border-radius: 20px; 
-            /* backdrop-filter: blur(15px); */ /* Már nem szükséges */
             text-align: center; 
             opacity: 0;
             transform: translateY(20px);
             transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
-            /* ÚJ: Árnyék */
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
         
-        /* MÓDOSÍTVA: Kvíz cím színe */
         .quiz-container h2 {
             color: var(--ps-blue);
         }
@@ -252,19 +230,16 @@
         #quiz-image { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid var(--ps-gold); margin-bottom: 15px; }
 
         .option-btn { 
-            /* MÓDOSÍTVA: Világosszürke háttér alapból */
             background: #f0f0f0;
             color: var(--text-dark); 
             padding: 15px; border-radius: 12px; 
             cursor: pointer; font-weight: 600; 
             margin-bottom: 12px; width: 100%; border: none; 
             transition: background 0.2s ease, transform 0.1s ease, color 0.2s ease, box-shadow 0.2s ease;
-            /* ÚJ: Enyhe árnyék */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .option-btn:hover:not(.correct-reveal):not(.wrong-reveal) {
-            /* MÓDOSÍTVA: Sötétebb szürke hoverre */
             background: #e0e0e0;
             box-shadow: 0 3px 6px rgba(0,0,0,0.15);
         }
@@ -276,37 +251,28 @@
         .option-btn.correct-reveal { background-color: var(--correct-bg) !important; color: white !important; }
         .option-btn.wrong-reveal { background-color: var(--wrong-bg) !important; color: white !important; }
 
-        /* MÓDOSÍTVA: Pontszám tábla stílusa - arany háttér, fehér szöveg */
         #score-board { position: fixed; bottom: 20px; right: 20px; background: var(--ps-gold); color: white; padding: 12px 24px; border-radius: 50px; font-weight: bold; z-index: 110; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        /* MÓDOSÍTVA: Játékos infó stílusa - sötétkék háttér, arany név */
         #player-info { position: fixed; top: 20px; left: 20px; font-weight: bold; background: var(--ps-blue); color: white; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 105; }
         #player-info span { color: var(--ps-gold); }
-        /* MÓDOSÍTVA: Következő üzenet színe sötétebb */
         #next-msg { color: var(--ps-gold); font-weight: bold; margin-top: 10px; visibility: hidden; }
 
         @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-/* Shake Animáció */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(8px); }
-    75% { transform: translateX(-8px); }
-    100% { transform: translateX(0); }
-}
 
-.shake-it {
-    animation: shake 0.3s ease-in-out;
-    border: 2px solid var(--wrong-bg) !important; /* Opcionális: piros keret rázkódáskor */
-}
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-8px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake-it {
+            animation: shake 0.3s ease-in-out;
+            border: 2px solid var(--wrong-bg) !important;
+        }
     </style>
 </head>
 <body>
@@ -322,16 +288,9 @@
         <source src="PayrollAndChill.mp3" type="audio/mpeg">
     </audio>
 
-<!-- Hanghatások -->
-<audio id="snd-click">
-    <source src="click.mp3" type="audio/mpeg">
-</audio>
-<audio id="snd-correct" preload="auto">
-    <source src="correct.mp3" type="audio/mpeg">
-</audio>
-<audio id="snd-wrong" preload="auto">
-    <source src="wrong.mp3" type="audio/mpeg">
-</audio>
+    <audio id="snd-click"><source src="click.mp3" type="audio/mpeg"></audio>
+    <audio id="snd-correct" preload="auto"><source src="correct.mp3" type="audio/mpeg"></audio>
+    <audio id="snd-wrong" preload="auto"><source src="wrong.mp3" type="audio/mpeg"></audio>
 
     <div id="login-overlay">
         <div class="login-box">
@@ -364,7 +323,6 @@
     <div id="score-board">PONTSZÁM: <span id="score-val">0</span></div>
 
     <script>
-        // Az alkalmazás logikája (JavaScript) változatlan marad, mivel csak a stílust módosítottuk.
         const employees = [
             { id: 1, date: "2026-05-31", name: "Babos János", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Babos Janos.JPG", trueFact: "Gyakran álmodok a Wizzair-el.", falseFact: "Sarkig érő hajam volt 20 évesen." },
             { id: 2, date: "2026-05-31", name: "Hatos Jenő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Hatos Jeno.JPG", trueFact: "Kedvenc számom a hat.", falseFact: "Kedvenc számom a hét." },
@@ -385,6 +343,26 @@
         
         const savedSolved = localStorage.getItem('payroll_solved_ids');
         const solvedIds = savedSolved ? new Set(JSON.parse(savedSolved)) : new Set();
+
+        const savedCorrect = localStorage.getItem('payroll_correct_ids');
+        const correctIds = savedCorrect ? new Set(JSON.parse(savedCorrect)) : new Set();
+
+        // Segédfüggvény a megoldott kép elérési útjának automatikus generálásához
+        function generateSolvedImageUrl(originalUrl) {
+            try {
+                const fullFileName = originalUrl.substring(originalUrl.lastIndexOf('/') + 1);
+                const lastDotIndex = fullFileName.lastIndexOf('.');
+                if (lastDotIndex !== -1) {
+                    const nameWithoutExtension = fullFileName.substring(0, lastDotIndex);
+                    const extension = fullFileName.substring(lastDotIndex);
+                    return `solvedimages/${nameWithoutExtension}_solved${extension}`;
+                }
+                return `solvedimages/${fullFileName}_solved`;
+            } catch (e) {
+                console.error("Hiba a kép nevének generálásakor:", e);
+                return originalUrl;
+            }
+        }
 
         window.onload = function() {
             const savedName = localStorage.getItem('payroll_player_name');
@@ -419,7 +397,6 @@
                 localStorage.setItem('payroll_player_name', playerName);
             }
             
-            // ZENE INDÍTÁSA
             const music = document.getElementById('bg-music');
             if (music) {
                 music.volume = 0.2;
@@ -427,7 +404,6 @@
             }
 
             document.getElementById('current-player-name').innerText = playerName;
-            
             document.getElementById('login-overlay').classList.add('hidden');
             initTablo();
         }
@@ -450,6 +426,7 @@
                 card.id = `card-${emp.id}`;
 
                 const isSolved = solvedIds.has(emp.id);
+                const isCorrectlyGuessed = correctIds.has(emp.id);
                 const isPast = emp.date < todayStr;
                 const isToday = emp.date === todayStr;
 
@@ -464,16 +441,18 @@
 
                 const displayName = (isToday || isPast || isSolved) ? emp.name : "???";
                 
+                // Ha helyesen találták el korábban, az új mappából tölti be a vicces képet
+                const cardImage = isCorrectlyGuessed ? generateSolvedImageUrl(emp.image) : emp.image;
+
                 let extraInfo = "";
                 if (isSolved) {
-                    // MÓDOSÍTVA: Tény színe sötétkék
                     extraInfo = `<div style="font-size: 0.75rem; color: var(--ps-blue); margin-top: 5px; font-style: italic; line-height: 1.1;">
                                     "${emp.trueFact}"
                                  </div>`;
                 }
 
                 card.innerHTML = `
-                    <img src="${emp.image}" alt="Kolléga">
+                    <img src="${cardImage}" alt="Kolléga">
                     <span>${displayName}</span>
                     ${extraInfo}
                 `;
@@ -481,18 +460,14 @@
             });
         }
         
-function handleCardClick(event, emp) {
-    // Hang lejátszása
-    const clickSnd = document.getElementById('snd-click');
-    if(clickSnd) {
-        clickSnd.currentTime = 0; // Alaphelyzetbe állítás, ha gyorsan kattintanak
-        clickSnd.play();
-    }
-
-    setTimeout(() => {
-        openQuiz(emp);
-    }, 100);
-}
+        function handleCardClick(event, emp) {
+            const clickSnd = document.getElementById('snd-click');
+            if(clickSnd) {
+                clickSnd.currentTime = 0; 
+                clickSnd.play();
+            }
+            setTimeout(() => { openQuiz(emp); }, 100);
+        }
 
         function openQuiz(emp) {
             selectedEmployee = emp;
@@ -523,51 +498,44 @@ function handleCardClick(event, emp) {
         }
         
         function handleOptionClick(btn, isCorrect) {
-            setTimeout(() => {
-                handleGuess(btn, isCorrect);
-            }, 100);
+            setTimeout(() => { handleGuess(btn, isCorrect); }, 100);
         }
 
         function handleGuess(btn, isCorrect) {
-    if (!canClickOption) return;
-    canClickOption = false;
-    
-    const quizContainer = document.querySelector('.quiz-container');
-    const correctSnd = document.getElementById('snd-correct');
-    const wrongSnd = document.getElementById('snd-wrong');
-
-    try {
-        if (isCorrect) {
-            if (correctSnd) {
-                correctSnd.currentTime = 0;
-                correctSnd.play(); 
-            }
-            score++;
-            document.getElementById('score-val').innerText = score;
-            localStorage.setItem('payroll_score', score);
-        } else {
-            // --- ÚJ RÉSZ: Shake effekt hozzáadása ---
-            quizContainer.classList.add('shake-it');
+            if (!canClickOption) return;
+            canClickOption = false;
             
-            if (wrongSnd) {
-                wrongSnd.currentTime = 0;
-                wrongSnd.play(); 
-            }
-        }
-    } catch (e) {
-        console.warn("Audio playback issue:", e);
-    }
+            const quizContainer = document.querySelector('.quiz-container');
+            const correctSnd = document.getElementById('snd-correct');
+            const wrongSnd = document.getElementById('snd-wrong');
 
+            try {
+                if (isCorrect) {
+                    if (correctSnd) { correctSnd.currentTime = 0; correctSnd.play(); }
+                    score++;
+                    document.getElementById('score-val').innerText = score;
+                    localStorage.setItem('payroll_score', score);
+                    
+                    // Mentjük, hogy eltalálta, így a tabló frissítéskor a _solved kép jelenik meg
+                    correctIds.add(selectedEmployee.id);
+                    localStorage.setItem('payroll_correct_ids', JSON.stringify(Array.from(correctIds)));
+                } else {
+                    quizContainer.classList.add('shake-it');
+                    if (wrongSnd) { wrongSnd.currentTime = 0; wrongSnd.play(); }
+                }
+            } catch (e) {
+                console.warn("Audio playback issue:", e);
+            }
 
             solvedIds.add(selectedEmployee.id);
             localStorage.setItem('payroll_solved_ids', JSON.stringify(Array.from(solvedIds)));
 
-// Ide másold be a Google Scripttől kapott teljes URL-t!
-            const googleScriptUrl = https://script.google.com/macros/s/AKfycby3lEkmcpL7sL8orGydN9vD6COnmh_015D9ucK8e-7YxTtCKFUasLIIPVQhf9PAkPgM/exec;
+            // JAVÍTVA: A Google Script URL-je most már helyesen idézőjelek között van mint String!
+            const googleScriptUrl = "https://script.google.com/macros/s/AKfycby3lEkmcpL7sL8orGydN9vD6COnmh_015D9ucK8e-7YxTtCKFUasLIIPVQhf9PAkPgM/exec";
 
             fetch(googleScriptUrl, {
                 method: "POST",
-                mode: "no-cors", // Biztonság miatt kell, hogy ne akadjon el a böngészőben
+                mode: "no-cors",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({
                     "player_name": playerName,
@@ -576,29 +544,29 @@ function handleCardClick(event, emp) {
                     "is_correct": isCorrect ? "Helyes" : "Helytelen"
                 }).toString()
             }).catch(err => console.error("Mentési hiba:", err));
+
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach(b => {
                 if (b.innerText === selectedEmployee.trueFact) b.classList.add('correct-reveal');
                 else if (b === btn && !isCorrect) b.classList.add('wrong-reveal');
             });
 
-           document.getElementById('next-msg').style.visibility = "visible";
+            document.getElementById('next-msg').style.visibility = "visible";
         }
 
-document.getElementById('quiz-overlay').onclick = () => {
-    if (!canClickOption) {
-        const overlay = document.getElementById('quiz-overlay');
-        const quizContainer = document.querySelector('.quiz-container'); // ÚJ sor
-        
-        overlay.classList.remove('visible');
-        
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            quizContainer.classList.remove('shake-it'); // ÚJ sor: levesszük az osztályt
-            initTablo();
-        }, 400); 
-    }
-};
+        document.getElementById('quiz-overlay').onclick = () => {
+            if (!canClickOption) {
+                const overlay = document.getElementById('quiz-overlay');
+                const quizContainer = document.querySelector('.quiz-container'); 
+                overlay.classList.remove('visible');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    quizContainer.classList.remove('shake-it'); 
+                    initTablo();
+                }, 400); 
+            }
+        };
+
         function logout() {
             localStorage.clear();
             location.reload();
