@@ -323,17 +323,49 @@
     <div id="score-board">PONTSZÁM: <span id="score-val">0</span></div>
 
     <script>
-        const employees = [
-            { id: 1, date: "2026-06-11", name: "Babos János", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Babos Janos.JPG", trueFact: "Gyakran álmodok a Wizzair-el.", falseFact: "Sarkig érő hajam volt 20 évesen." },
-            { id: 2, date: "2026-06-11", name: "Hatos Jenő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Hatos Jeno.JPG", trueFact: "Kedvenc számom a hat.", falseFact: "Kedvenc számom a hét." },
-            { id: 3, date: "2026-06-11", name: "Kazó-Dévényi Nikolett", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kazo-Devenyi Nikolett.JPG", trueFact: "Szeretek okoskodni.", falseFact: "A szüleim 2 méter magasak."},
-            { id: 4, date: "2026-06-11", name: "Kovács Márton", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kovacs Marton Daniel.JPG", trueFact: "Lüktetnek az erek a lábamban.", falseFact: "Sose voltam kopasz." },
-            { id: 5, date: "2026-06-11", name: "Varga Dorina", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Varga Dorina.JPG", trueFact: "Van cukrász végzettségem.", falseFact: "Imádok wizzair-el repülni." },
-            { id: 6, date: "2026-06-11", name: "Nagy Dávid", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Nagy Dávid2.JPG", trueFact: "Szeretek főzni, majdnem mindig hozok ebédet.", falseFact: "Volt egy csúnya motoros baleetem." },
-            { id: 7, date: "2026-06-11", name: "Apró Lilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Apro Lilla.JPG", trueFact: "Már három éve vagyok gyakornok a procinál.", falseFact: "Van masszőr végzettségem." },
-            { id: 8, date: "2026-06-11", name: "Mezei Enikő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Mezei Eniko.JPG", trueFact: "Star Wars rajongó vagyok.", falseFact: "Allergiás vagyok a mogyoróra." },
-            { id: 9, date: "2026-06-11", name: "Enying Máté", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Enying Mate.JPG", trueFact: "Szeretek guggolni, főleg súlyokkal.", falseFact: "Pszichológia szakra jártam a Szegedi Egyetemen." },
-            { id: 10, date: "2026-06-11", name: "Bánfalvi Csenge", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Banfalvi Csenge.JPG", trueFact: "Az exem májusfát állított nekem a kertünkben.", falseFact: "Volt már szőke is a hajam." }
+
+const employees = [
+
+            { id: 1, date: "2026-07-01", name: "Jakab Beatrix", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Jakab Beatrix.JPG", trueFact: "Egyszer megállítottak a rendőrök, mert azt hitték bevándorló vagyok.", falseFact: "Egyszer egy boltban lopással gyanúsítottak, pedig semmit nem vittem el.", falseFact2: "Már ültem rendőrautóban." },
+
+            { id: 2, date: "2026-07-01", name: "Harcsa Zita", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Harcsa Zita.JPG", trueFact: "3 éve ugyanazt a reggelit eszem majdnem mindennap. ", falseFact: "Megnyertem a Megasztárt", falseFact2: "10 macskám van." },
+
+            { id: 3, date: "2026-07-01", name: "Vizer Istvan", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Vizer Istvan.JPG", trueFact: "Egy munkahelyen dolgoztunk anyukámmal és apukámmal is.", falseFact: "Tudok kézenállni.", falseFact2: "Utálom a palancsintát." },
+
+            { id: 4, date: "2026-07-01", name: "Varga Judit", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Varga Judit.JPG", trueFact: "Majdnem óvodás koromig nem beszéltem, utána viszont egyből barokk körmondatokban.", falseFact: "Nagyon korán elkezdtem beszélni, be nem állt a szám.", falseFact2: "Nem jártam óvodába." },
+
+            { id: 5, date: "2026-07-01", name: "Tóth Loretta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Toth Loretta.JPG", trueFact: "Szeretek lőni, és tudok is. ", falseFact: "Thai boxoltam már versenyszerűen.", falseFact2: "Szerepeltem gyerekkoromban az Ének iskolájában." },
+
+            { id: 6, date: "2026-07-01", name: "Tóth Csilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Toth Csilla.JPG", trueFact: "Nem tudok úszni.", falseFact: "Második házasságomban élek.", falseFact2: "Tejérzékeny vagyok" },
+
+            { id: 7, date: "2026-07-01", name: "Nagy Brigitta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Nagy Brigitta.JPG", trueFact: "Még nem repültem.", falseFact: "Szeretem a spenótot.", falseFact2: "Szeretek sakkozni." },
+
+            { id: 8, date: "2026-07-01", name: "Mezei Enikő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Mezei Eniko.JPG", trueFact: "Egyszer eladtam a hajam és abból vettem fesztivál belépőt.", falseFact: "Egy ideig online pókerezés volt a fő bevételi forrásom.", falseFact2: "Növényeket szaporítok és adok el." },
+
+            { id: 9, date: "2026-07-01", name: "Hatos Jenő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Hatos Jeno.JPG", trueFact: "Egy busz kereke alá szorult a lábfejem.", falseFact: "Teljesítettem az országos Kékkört.", falseFact2: "A legnagyobb harcsa amit kifogtam nehezebb volt mint én." },
+
+            { id: 10, date: "2026-07-01", name: "Apró Lilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Apro Lilla.JPG", trueFact: "Kislányként gyakran beültem a csirkeólba a csirkékhez, annyira szeretem az állatokat.", falseFact: "Laktam Madeira szigetén egy hollow ig.", falseFact2: "Komolyan gondolkodom, hogy PhD képzésre menjek." },
+
+            { id: 11, date: "2026-07-01", name: "Boda Anna", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Boda Anna.JPG", trueFact: "Nem láttam még soha élőben filmforgatást.", falseFact: "Nem voltam még külföldön.", falseFact2: "Nincs háziállatom." },
+
+            { id: 12, date: "2026-07-01", name: "Szabó Tamara", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Szabo Tamara.JPG", trueFact: "Ugrottam már ki egy repülőből tandemugrás során.", falseFact: "4 különböző nyelven beszélek.", falseFact2: "Általános iskola óta néptáncolok." },
+
+            { id: 13, date: "2026-07-01", name: "Vass Márta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Vass Marta.JPG", trueFact: "Félek a kutyáktól.", falseFact: "Allergiás vagyok a mogyoróra.", falseFact2: "175 cm magas vagyok." },
+
+            { id: 14, date: "2026-07-01", name: "Kormos Adriána", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kormos Adriana.JPG", trueFact: "Három hangszeren tudok zenélni.", falseFact: "Nem éltem még külföldön.", falseFact2: "Gimis koromban versenytáncoltam." },
+
+            { id: 15, date: "2026-07-01", name: "Szebenyik Márta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Szebenyik Marta.JPG", trueFact: "Az egyik kedvenc filmem:  Constantine - A démonvadász", falseFact: "Régebben szerettem makramézni", falseFact2: "Középiskolában orvosnak készültem." },
+
+            { id: 16, date: "2026-07-01", name: "Géczi Eszter", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Geczi Eszter.JPG", trueFact: "Egyik évben épp a temetőben voltam, mikor szilveszterkor éjfélt ütött az óra.", falseFact: "Szóbeli érettségi közben felborítottam a tanári asztalon lévő vázát.", falseFact2: "Az első pasimnak 3 mellbimbója volt." },
+
+            { id: 17, date: "2026-07-01", name: "Kazó-Dévényi Nikolett", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kazo-Devenyi Nikolett.JPG", trueFact: "Nem szeretem a csokoládét.", falseFact: "Sosem láttam még egyik Gyűrűk Ura filmet sem.", falseFact2: "A nagyobbik macskám 10 kg." },
+
+            { id: 18, date: "2026-07-01", name: "Kovács Márton", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kovacs Marton Daniel.JPG", trueFact: "Eddig kétszer voltam kopaszra nyírva.", falseFact: "Még soha nem adtam plazmát.", falseFact2: "A családi címerünkön egy liba van." },
+
+            { id: 19, date: "2026-07-01", name: "Zöldesi Levente", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Zoldesi Levente.JPG", trueFact: "Mielőtt a procihoz jöttem egy pékségben dolgoztam.", falseFact: "Gyerekkoromban egy gekkó volt a háziállatom.", falseFact2: "Az én ötletem volt a Coffee Roulette." },
+
+            { id: 20, date: "2026-07-01", name: "Boncsér Katalin", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Boncser Katalin.JPG", trueFact: "Disszidálni akartunk családilag külföldre menekültként még gyerekkoromban.", falseFact: "Hét közben jelenleg 10-10 kilométert futok.", falseFact2: "Kíváncsiságból jelentkeztem a Mars One programra, kolonizálni a Marsot." }
+
         ];
 
         let score = 0;
@@ -469,17 +501,19 @@
             setTimeout(() => { openQuiz(emp); }, 100);
         }
 
-        function openQuiz(emp) {
+	function openQuiz(emp) {
             selectedEmployee = emp;
             canClickOption = true;
             document.getElementById('next-msg').style.visibility = "hidden";
             document.getElementById('quiz-name').innerText = emp.name;
             document.getElementById('quiz-image').src = emp.image;
             
+            // MÓDOSÍTVA: Most már 3 állítás kerül a tömbbe (1 igaz, 2 hamis)
             const choices = [
                 { text: emp.trueFact, isCorrect: true },
-                { text: emp.falseFact, isCorrect: false }
-            ].sort(() => Math.random() - 0.5);
+                { text: emp.falseFact, isCorrect: false },
+                { text: emp.falseFact2, isCorrect: false }
+            ].sort(() => Math.random() - 0.5); // Véletlenszerű keverés
 
             const container = document.getElementById('options-container');
             container.innerHTML = '';
@@ -495,8 +529,7 @@
             overlay.style.display = 'flex';
             void overlay.offsetWidth; 
             overlay.classList.add('visible');
-        }
-        
+        }        
         function handleOptionClick(btn, isCorrect) {
             setTimeout(() => { handleGuess(btn, isCorrect); }, 100);
         }
