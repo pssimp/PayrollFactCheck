@@ -381,24 +381,30 @@ const employees = [
 
         // Segédfüggvény a megoldott kép elérési útjának automatikus generálásához
 
-	function generateSolvedImageUrl(originalUrl) {
+function generateSolvedImageUrl(originalUrl) {
             try {
-                // MÓDOSÍTVA: decodeURIComponent használata, hogy a %20-ból újra szóköz legyen
-                const decodedUrl = decodeURIComponent(originalUrl);
-                const fullFileName = decodedUrl.substring(decodedUrl.lastIndexOf('/') + 1);
-                const lastDotIndex = fullFileName.lastIndexOf('.');
-                if (lastDotIndex !== -1) {
-                    const nameWithoutExtension = fullFileName.substring(0, lastDotIndex);
-                    const extension = fullFileName.substring(lastDotIndex).toLowerCase(); // Kisbetűs kiterjesztés biztosítása
-                    return `solvedimages/${nameWithoutExtension}_solved${extension}`;
-                }
-                return `solvedimages/${fullFileName}_solved`;
+                // 1. Dekódoljuk az URL-t (hogy a %20-ból újra szóköz legyen)
+                let decodedUrl = decodeURIComponent(originalUrl);
+                
+                // 2. Kivágjuk csak a fájlnevet a kiterjesztéssel együtt
+                let fullFileName = decodedUrl.substring(decodedUrl.lastIndexOf('/') + 1);
+                
+                // 3. Levágjuk az eredeti kiterjesztést (akár .JPG, akár .jpg)
+                let lastDotIndex = fullFileName.lastIndexOf('.');
+                let nameWithoutExtension = (lastDotIndex !== -1) ? fullFileName.substring(0, lastDotIndex) : fullFileName;
+                
+                // 4. Biztosítjuk, hogy a kimenet a Te mappádhoz igazodva kisbetűs .jpg legyen
+                let finalUrl = `solvedimages/${nameWithoutExtension}_solved.jpg`;
+                
+                console.log("Eredeti URL:", originalUrl);
+                console.log("Generált megoldott kép URL:", finalUrl);
+                
+                return finalUrl;
             } catch (e) {
                 console.error("Hiba a kép nevének generálásakor:", e);
                 return originalUrl;
             }
-        }
-        window.onload = function() {
+        }        window.onload = function() {
             const savedName = localStorage.getItem('payroll_player_name');
             const savedScore = localStorage.getItem('payroll_score');
             
