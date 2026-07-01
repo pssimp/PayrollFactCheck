@@ -380,13 +380,16 @@ const employees = [
         const correctIds = savedCorrect ? new Set(JSON.parse(savedCorrect)) : new Set();
 
         // Segédfüggvény a megoldott kép elérési útjának automatikus generálásához
-        function generateSolvedImageUrl(originalUrl) {
+
+	function generateSolvedImageUrl(originalUrl) {
             try {
-                const fullFileName = originalUrl.substring(originalUrl.lastIndexOf('/') + 1);
+                // MÓDOSÍTVA: decodeURIComponent használata, hogy a %20-ból újra szóköz legyen
+                const decodedUrl = decodeURIComponent(originalUrl);
+                const fullFileName = decodedUrl.substring(decodedUrl.lastIndexOf('/') + 1);
                 const lastDotIndex = fullFileName.lastIndexOf('.');
                 if (lastDotIndex !== -1) {
                     const nameWithoutExtension = fullFileName.substring(0, lastDotIndex);
-                    const extension = fullFileName.substring(lastDotIndex);
+                    const extension = fullFileName.substring(lastDotIndex).toLowerCase(); // Kisbetűs kiterjesztés biztosítása
                     return `solvedimages/${nameWithoutExtension}_solved${extension}`;
                 }
                 return `solvedimages/${fullFileName}_solved`;
@@ -395,7 +398,6 @@ const employees = [
                 return originalUrl;
             }
         }
-
         window.onload = function() {
             const savedName = localStorage.getItem('payroll_player_name');
             const savedScore = localStorage.getItem('payroll_score');
