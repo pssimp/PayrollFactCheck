@@ -558,7 +558,6 @@ function generateSolvedImageUrl(originalUrl) {
                     document.getElementById('score-val').innerText = score;
                     localStorage.setItem('payroll_score', score);
                     
-                    // Mentjük, hogy eltalálta, így a tabló frissítéskor a _solved kép jelenik meg
                     correctIds.add(selectedEmployee.id);
                     localStorage.setItem('payroll_correct_ids', JSON.stringify(Array.from(correctIds)));
                 } else {
@@ -572,7 +571,15 @@ function generateSolvedImageUrl(originalUrl) {
             solvedIds.add(selectedEmployee.id);
             localStorage.setItem('payroll_solved_ids', JSON.stringify(Array.from(solvedIds)));
 
-            // JAVÍTVA: A Google Script URL-je most már helyesen idézőjelek között van mint String!
+            // ÚJ: Aktuális dátum és idő formázása (ÉÉÉÉ.HH.NN. ÓÓ:PP:MP)
+            const now = new Date();
+            const timestampStr = now.getFullYear() + '.' + 
+                                 String(now.getMonth() + 1).padStart(2, '0') + '.' + 
+                                 String(now.getDate()).padStart(2, '0') + ' ' + 
+                                 String(now.getHours()).padStart(2, '0') + ':' + 
+                                 String(now.getMinutes()).padStart(2, '0') + ':' + 
+                                 String(now.getSeconds()).padStart(2, '0');
+
             const googleScriptUrl = "https://script.google.com/macros/s/AKfycby3lEkmcpL7sL8orGydN9vD6COnmh_015D9ucK8e-7YxTtCKFUasLIIPVQhf9PAkPgM/exec";
 
             fetch(googleScriptUrl, {
@@ -583,7 +590,8 @@ function generateSolvedImageUrl(originalUrl) {
                     "player_name": playerName,
                     "employee_target": selectedEmployee.name,
                     "selected_option": btn.innerText,
-                    "is_correct": isCorrect ? "Helyes" : "Helytelen"
+                    "is_correct": isCorrect ? "Helyes" : "Helytelen",
+                    "timestamp": timestampStr // ÚJ: Küldjük a dátumot is!
                 }).toString()
             }).catch(err => console.error("Mentési hiba:", err));
 
