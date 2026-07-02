@@ -456,7 +456,7 @@ function generateSolvedImageUrl(originalUrl) {
                    String(today.getDate()).padStart(2, '0');
         }
 
-        function initTablo() {
+function initTablo() {
             const tabloView = document.getElementById('tablo-view');
             tabloView.innerHTML = '';
             const todayStr = getTodayString();
@@ -471,15 +471,22 @@ function generateSolvedImageUrl(originalUrl) {
                 const isPast = emp.date < todayStr;
                 const isToday = emp.date === todayStr;
 
-                if (isSolved || isPast) {
+                // MÓDOSÍTOTT LOGIKA:
+                // Ha már megválaszolta, akkor kész (függetlenül a dátumtól)
+                if (isSolved) {
                     card.classList.add('completed');
-                } else if (isToday) {
+                } 
+                // Ha ma van, VAGY múltbeli, de még NINCS megoldva, akkor aktív és kattintható!
+                else if (isToday || (isPast && !isSolved)) {
                     card.classList.add('active');
                     card.onclick = (e) => handleCardClick(e, emp);
-                } else {
+                } 
+                // Minden más eset (jövőbeli állítások) zárva marad
+                else {
                     card.classList.add('locked');
                 }
 
+                // A név láthatósága: Ha ma van, ha múltbeli, vagy ha már megoldotta, látszódjon a név
                 const displayName = (isToday || isPast || isSolved) ? emp.name : "???";
                 
                 // Ha helyesen találták el korábban, az új mappából tölti be a vicces képet
@@ -488,7 +495,7 @@ function generateSolvedImageUrl(originalUrl) {
                 let extraInfo = "";
                 if (isSolved) {
                     extraInfo = `<div style="font-size: 0.75rem; color: var(--ps-blue); margin-top: 5px; font-style: italic; line-height: 1.1;">
-                                    "${emp.trueFact}"
+                                     "${emp.trueFact}"
                                  </div>`;
                 }
 
