@@ -605,18 +605,17 @@ function initTablo() {
             const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzwMicdKkBorzf4Q-E9ajNqW_LKOXgAydUpc7JRbyD2AZvwE-zWkK469LbA8EaGwItF/exec";
 
             fetch(googleScriptUrl, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({
-                    "player_name": playerName,
-                    "employee_target": selectedEmployee.name,
-                    "selected_option": btn.innerText,
-                    "is_correct": isCorrect ? "Helyes" : "Helytelen",
-                    "timestamp": timestampStr // ÚJ: Küldjük a dátumot is!
-                }).toString()
-            }).catch(err => console.error("Mentési hiba:", err));
-
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams({
+        "player_name": playerName,
+        "employee_target": selectedEmployee.name,
+        "selected_option": btn.innerText,
+        "is_correct": isCorrect ? "Helyes" : "Helytelen",
+        "timestamp": timestampStr
+    }) // Nincs .toString(), nincs headers!
+}).catch(err => console.error("Mentési hiba:", err));
+			
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach(b => {
                 if (b.innerText === selectedEmployee.trueFact) b.classList.add('correct-reveal');
