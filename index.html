@@ -434,8 +434,21 @@ function generateSolvedImageUrl(originalUrl) {
                     alert("Kérlek, adj meg egy nevet!");
                     return;
                 }
-                playerName = input.value.trim();
+                
+                // 1. Kiszedjük a beírt nevet
+                const rawName = input.value.trim();
+                
+                // 2. Generálunk egy 3 jegyű véletlen számot
+                const randomNumber = Math.floor(100 + Math.random() * 900);
+                
+                // 3. Összefűzzük: pl. "Csilla#421"
+                playerName = `${rawName}#${randomNumber}`;
+                
+                // Elmentjük az egyedi nevet a böngészőbe
                 localStorage.setItem('payroll_player_name', playerName);
+            } else {
+                // Ha visszatérő játékos, a localStorage-ból már a "Név#szám" formátumot kapta meg a window.onload
+                // Így a playerName változóban már a teljes azonosító van.
             }
             
             const music = document.getElementById('bg-music');
@@ -444,7 +457,9 @@ function generateSolvedImageUrl(originalUrl) {
                 music.play().catch(err => console.log("Zene hiba:", err));
             }
 
-            document.getElementById('current-player-name').innerText = playerName;
+            // MÓDOSÍTVA: A kijelzőre csak a tiszta nevet írjuk ki a '#' karakter előtt elvágva (pl. "Csilla")
+            document.getElementById('current-player-name').innerText = playerName.split('#')[0];
+            
             document.getElementById('login-overlay').classList.add('hidden');
             initTablo();
         }
