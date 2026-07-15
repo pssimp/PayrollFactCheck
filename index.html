@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payroll Fact Check</title>
+    <title>Payroll Fact Check - Gyakorló Mód</title>
     <style>
         :root {
-            /* Sötétebb kék a jobb kontrasztért világos háttéren */
             --ps-blue: #0f1a4a;
-            /* Kicsit sötétebb arany/narancs a jobb olvashatóságért */
             --ps-gold: #e6a817; 
             --correct-bg: #27ae60;
             --wrong-bg: #e74c3c;
@@ -34,68 +32,6 @@
             background-attachment: fixed;
         }
 
-        /* LOGIN SCREEN */
-        #login-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 26, 74, 0.95);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity var(--transition-speed) ease, visibility var(--transition-speed);
-        }
-
-        #login-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid var(--ps-gold);
-            animation: slideInDown 0.5s ease-out;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .login-box h2, .login-box p {
-            color: var(--ps-blue);
-        }
-
-        .login-box input {
-            padding: 12px;
-            width: 250px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            color: var(--text-dark);
-        }
-
-        .login-box button {
-            padding: 12px 30px;
-            background: var(--ps-gold);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: transform 0.1s ease, background-color 0.2s ease;
-        }
-
-        .login-box button:hover {
-            background-color: #d19915;
-        }
-        
-        .login-box button:active {
-            transform: scale(0.95);
-        }
-
         /* JÁTÉK ELEMEI */
         .game-header h1 {
             font-size: 2.5rem;
@@ -109,6 +45,7 @@
             color: var(--ps-blue);
             font-weight: bold;
             text-shadow: 0 0 5px white;
+            text-align: center;
         }
 
         #tablo-view {
@@ -165,35 +102,8 @@
             text-shadow: 0 0 5px rgba(0,0,0,0.5); 
         }
 
-        .person-card.locked {
-            opacity: 0.7;
-            filter: grayscale(100%);
-            background: rgba(240, 240, 240, 0.9);
-        }
-
-        .person-card.locked img {
-            filter: blur(5px) grayscale(100%);
-            opacity: 0.5;
-        }
-
-        .person-card.locked::after {
-            content: "?";
-            position: absolute;
-            top: 35%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3.5rem;
-            color: var(--ps-blue);
-            font-weight: bold;
-            text-shadow: 0 0 10px white;
-        }
-
-        .person-card.locked span {
-            color: #888;
-        }
-
         .person-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--ps-gold); }
-        .person-card span { display: block; margin-top: 8px; font-size: 0.9rem; font-weight: 600; color: var(--ps-blue); }
+        .person-card span { display: block; margin-top: 8px; font-size: 0.9rem; font-weight: 600; color: var(--ps-blue); text-align: center; }
 
         /* QUIZ OVERLAY */
         #quiz-overlay {
@@ -252,14 +162,7 @@
         .option-btn.wrong-reveal { background-color: var(--wrong-bg) !important; color: white !important; }
 
         #score-board { position: fixed; bottom: 20px; right: 20px; background: var(--ps-gold); color: white; padding: 12px 24px; border-radius: 50px; font-weight: bold; z-index: 110; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        #player-info { position: fixed; top: 20px; left: 20px; font-weight: bold; background: var(--ps-blue); color: white; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 105; }
-        #player-info span { color: var(--ps-gold); }
         #next-msg { color: var(--ps-gold); font-weight: bold; margin-top: 10px; visibility: hidden; }
-
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         @keyframes shake {
             0% { transform: translateX(0); }
@@ -277,14 +180,6 @@
 </head>
 <body>
 
-    <form name="payroll-logs-v2" data-netlify="true" hidden>
-        <input type="text" name="player_name">
-        <input type="text" name="employee_target">
-        <input type="text" name="selected_option">
-        <input type="text" name="is_correct">
-		<input type="text" name="timestamp">
-    </form>
-
     <audio id="bg-music" loop>
         <source src="PayrollAndChill.mp3" type="audio/mpeg">
     </audio>
@@ -293,21 +188,9 @@
     <audio id="snd-correct" preload="auto"><source src="correct.mp3" type="audio/mpeg"></audio>
     <audio id="snd-wrong" preload="auto"><source src="wrong.mp3" type="audio/mpeg"></audio>
 
-    <div id="login-overlay">
-        <div class="login-box">
-            <h2>Üdvözöllek a Payroll Fact Checkben!</h2>
-            <p>Kérlek, add meg a neved a játékhoz:</p>
-            <input type="text" id="username-input" placeholder="Neved..." autocomplete="off">
-            <br>
-            <button onclick="startGame()">Játék indítása</button>
-        </div>
-    </div>
-
-    <div id="player-info">Játékos: <span id="current-player-name">-</span></div>
-
     <div class="game-header">
         <h1>Payroll Fact Check</h1>
-        <p>Minden nap egy újabb titkot fedünk fel!</p>
+        <p>Gyakorló mód – Kattints bármelyik kollégára a tipphez!</p>
     </div>
 
     <div id="tablo-view"></div>
@@ -324,157 +207,65 @@
     <div id="score-board">PONTSZÁM: <span id="score-val">0</span></div>
 
     <script>
-
-const employees = [
-
-            { id: 1, date: "2026-07-03", name: "Jakab Beatrix", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Jakab Beatrix.JPG", trueFact: "Egyszer megállítottak a rendőrök, mert azt hitték bevándorló vagyok.", falseFact: "Egyszer egy boltban lopással gyanúsítottak, pedig semmit nem vittem el.", falseFact2: "Már ültem rendőrautóban." },
-
-            { id: 2, date: "2026-07-03", name: "Harcsa Zita", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Harcsa Zita.JPG", trueFact: "3 éve ugyanazt a reggelit eszem majdnem mindennap. ", falseFact: "Megnyertem a Megasztárt", falseFact2: "10 macskám van." },
-
-            { id: 3, date: "2026-07-03", name: "Vizer Istvan", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Vizer Istvan.JPG", trueFact: "Egy munkahelyen dolgoztunk anyukámmal és apukámmal is.", falseFact: "Tudok kézenállni.", falseFact2: "Utálom a palancsintát." },
-
-            { id: 4, date: "2026-07-03", name: "Varga Judit", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Varga Judit.JPG", trueFact: "Majdnem óvodás koromig nem beszéltem, utána viszont egyből barokk körmondatokban.", falseFact: "Nagyon korán elkezdtem beszélni, be nem állt a szám.", falseFact2: "Nem jártam óvodába." },
-
-            { id: 5, date: "2026-07-06", name: "Tóth Loretta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Toth Loretta.JPG", trueFact: "Szeretek lőni, és tudok is. ", falseFact: "Thai boxoltam már versenyszerűen.", falseFact2: "Szerepeltem gyerekkoromban az Ének iskolájában." },
-
-            { id: 6, date: "2026-07-06", name: "Tóth Csilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Toth Csilla.JPG", trueFact: "Nem tudok úszni.", falseFact: "Második házasságomban élek.", falseFact2: "Tejérzékeny vagyok" },
-
-            { id: 7, date: "2026-07-06", name: "Nagy Brigitta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Nagy Brigitta.JPG", trueFact: "Még nem repültem.", falseFact: "Szeretem a spenótot.", falseFact2: "Szeretek sakkozni." },
-
-            { id: 8, date: "2026-07-06", name: "Mezei Enikő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Mezei Eniko.JPG", trueFact: "Egyszer eladtam a hajam és abból vettem fesztivál belépőt.", falseFact: "Egy ideig online pókerezés volt a fő bevételi forrásom.", falseFact2: "Növényeket szaporítok és adok el." },
-
-            { id: 9, date: "2026-07-07", name: "Hatos Jenő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Hatos Jeno.JPG", trueFact: "Egy busz kereke alá szorult a lábfejem.", falseFact: "Teljesítettem az országos Kékkört.", falseFact2: "A legnagyobb harcsa amit kifogtam nehezebb volt mint én." },
-
-            { id: 10, date: "2026-07-07", name: "Apró Lilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Apro Lilla.JPG", trueFact: "Kislányként gyakran beültem a csirkeólba a csirkékhez, annyira szeretem az állatokat.", falseFact: "Laktam Madeira szigetén egy hónapig.", falseFact2: "Komolyan gondolkodom, hogy PhD képzésre menjek." },
-
-            { id: 11, date: "2026-07-07", name: "Boda Anna", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Boda Anna.JPG", trueFact: "Nem láttam még soha élőben filmforgatást.", falseFact: "Nem voltam még külföldön.", falseFact2: "Nincs háziállatom." },
-
-            { id: 12, date: "2026-07-07", name: "Szabó Tamara", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Szabo Tamara.JPG", trueFact: "Ugrottam már ki egy repülőből tandemugrás során.", falseFact: "4 különböző nyelven beszélek.", falseFact2: "Általános iskola óta néptáncolok." },
-
-            { id: 13, date: "2026-07-08", name: "Vass Márta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Vass Marta.JPG", trueFact: "Félek a kutyáktól.", falseFact: "Allergiás vagyok a mogyoróra.", falseFact2: "175 cm magas vagyok." },
-
-            { id: 14, date: "2026-07-08", name: "Kormos Adriána", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kormos Adriana.JPG", trueFact: "Három hangszeren tudok zenélni.", falseFact: "Nem éltem még külföldön.", falseFact2: "Gimis koromban versenytáncoltam." },
-
-            { id: 15, date: "2026-07-08", name: "Szebenyik Márta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Szebenyik Marta.JPG", trueFact: "Az egyik kedvenc filmem:  Constantine - A démonvadász", falseFact: "Régebben szerettem makramézni", falseFact2: "Középiskolában orvosnak készültem." },
-
-            { id: 16, date: "2026-07-08", name: "Géczi Eszter", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Geczi Eszter.JPG", trueFact: "Egyik évben épp a temetőben voltam, mikor szilveszterkor éjfélt ütött az óra.", falseFact: "Szóbeli érettségi közben felborítottam a tanári asztalon lévő vázát.", falseFact2: "Az első pasimnak 3 mellbimbója volt." },
-
-            { id: 17, date: "2026-07-09", name: "Kazó-Dévényi Nikolett", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kazo-Devenyi Nikolett.JPG", trueFact: "Nem szeretem a csokoládét.", falseFact: "Sosem láttam még egyik Gyűrűk Ura filmet sem.", falseFact2: "A nagyobbik macskám 10 kg." },
-
-            { id: 18, date: "2026-07-09", name: "Kovács Márton", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kovacs Marton Daniel.JPG", trueFact: "Eddig kétszer voltam kopaszra nyírva.", falseFact: "Még soha nem adtam plazmát.", falseFact2: "A családi címerünkön egy liba van." },
-
-            { id: 19, date: "2026-07-09", name: "Zöldesi Levente", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Zoldesi Levente.JPG", trueFact: "Mielőtt a procihoz jöttem egy pékségben dolgoztam.", falseFact: "Gyerekkoromban egy gekkó volt a háziállatom.", falseFact2: "Az én ötletem volt a Coffee Roulette." },
-
-            { id: 20, date: "2026-07-09", name: "Boncsér Katalin", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Boncser Katalin.JPG", trueFact: "Disszidálni akartunk családilag külföldre menekültként még gyerekkoromban.", falseFact: "Hét közben jelenleg 10-10 kilométert futok.", falseFact2: "Kíváncsiságból jelentkeztem a Mars One programra, kolonizálni a Marsot." }
-
+        const employees = [
+            { id: 1, name: "Jakab Beatrix", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Jakab Beatrix.JPG", trueFact: "Egyszer megállítottak a rendőrök, mert azt hitték bevándorló vagyok.", falseFact: "Egyszer egy boltban lopással gyanúsítottak, pedig semmit nem vittem el.", falseFact2: "Már ültem rendőrautóban." },
+            { id: 2, name: "Harcsa Zita", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Harcsa Zita.JPG", trueFact: "3 éve ugyanazt a reggelit eszem majdnem mindennap. ", falseFact: "Megnyertem a Megasztárt", falseFact2: "10 macskám van." },
+            { id: 3, name: "Vizer Istvan", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Vizer Istvan.JPG", trueFact: "Egy munkahelyen dolgoztunk anyukámmal és apukámmal is.", falseFact: "Tudok kézenállni.", falseFact2: "Utálom a palancsintát." },
+            { id: 4, name: "Varga Judit", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Varga Judit.JPG", trueFact: "Majdnem óvodás koromig nem beszéltem, utána viszont egyből barokk körmondatokban.", falseFact: "Nagyon korán elkezdtem beszélni, be nem állt a szám.", falseFact2: "Nem jártam óvodába." },
+            { id: 5, name: "Tóth Loretta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Toth Loretta.JPG", trueFact: "Szeretek lőni, és tudok is. ", falseFact: "Thai boxoltam már versenyszerűen.", falseFact2: "Szerepeltem gyerekkoromban az Ének iskolájában." },
+            { id: 6, name: "Tóth Csilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Toth Csilla.JPG", trueFact: "Nem tudok úszni.", falseFact: "Második házasságomban élek.", falseFact2: "Tejérzékeny vagyok" },
+            { id: 7, name: "Nagy Brigitta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Nagy Brigitta.JPG", trueFact: "Még nem repültem.", falseFact: "Szeretem a spenótot.", falseFact2: "Szeretek sakkozni." },
+            { id: 8, name: "Mezei Enikő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Mezei Eniko.JPG", trueFact: "Egyszer eladtam a hajam és abból vettem fesztivál belépőt.", falseFact: "Egy ideig online pókerezés volt a fő bevételi forrásom.", falseFact2: "Növényeket szaporítok és adok el." },
+            { id: 9, name: "Hatos Jenő", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Hatos Jeno.JPG", trueFact: "Egy busz kereke alá szorult a lábfejem.", falseFact: "Teljesítettem az országos Kékkört.", falseFact2: "A legnagyobb harcsa amit kifogtam nehezebb volt mint én." },
+            { id: 10, name: "Apró Lilla", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Apro Lilla.JPG", trueFact: "Kislányként gyakran beültem a csirkeólba a csirkékhez, annyira szeretem az állatokat.", falseFact: "Laktam Madeira szigetén egy hollow ig.", falseFact2: "Komolyan gondolkodom, hogy PhD képzésre menjek." },
+            { id: 11, name: "Boda Anna", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Boda Anna.JPG", trueFact: "Nem láttam még soha élőben filmforgatást.", falseFact: "Nem voltam még külföldön.", falseFact2: "Nincs háziállatom." },
+            { id: 12, name: "Szabó Tamara", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Szabo Tamara.JPG", trueFact: "Ugrottam már ki egy repülőből tandemugrás során.", falseFact: "4 különböző nyelven beszélek.", falseFact2: "Általános iskola óta néptáncolok." },
+            { id: 13, name: "Vass Márta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Vass Marta.JPG", trueFact: "Félek a kutyáktól.", falseFact: "Allergiás vagyok a mogyoróra.", falseFact2: "175 cm magas vagyok." },
+            { id: 14, name: "Kormos Adriána", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kormos Adriana.JPG", trueFact: "Három hangszeren tudok zenélni.", falseFact: "Nem éltem még külföldön.", falseFact2: "Gimis koromban versenytáncoltam." },
+            { id: 15, name: "Szebenyik Márta", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Szebenyik Marta.JPG", trueFact: "Az egyik kedvenc filmem:  Constantine - A démonvadász", falseFact: "Régebben szerettem makramézni", falseFact2: "Középiskolában orvosnak készültem." },
+            { id: 16, name: "Géczi Eszter", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Geczi Eszter.JPG", trueFact: "Egyik évben épp a temetőben voltam, mikor szilveszterkor éjfélt ütött az óra.", falseFact: "Szóbeli érettségi közben felborítottam a tanári asztalon lévő vázát.", falseFact2: "Az első pasimnak 3 mellbimbója volt." },
+            { id: 17, name: "Kazó-Dévényi Nikolett", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kazo-Devenyi Nikolett.JPG", trueFact: "Nem szeretem a csokoládét.", falseFact: "Sosem láttam még egyik Gyűrűk Ura filmet sem.", falseFact2: "A nagyobbik macskám 10 kg." },
+            { id: 18, name: "Kovács Márton", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Kovacs Marton Daniel.JPG", trueFact: "Eddig kétszer voltam kopaszra nyírva.", falseFact: "Még soha nem adtam plazmát.", falseFact2: "A családi címerünkön egy liba van." },
+            { id: 19, name: "Zöldesi Levente", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Zoldesi Levente.JPG", trueFact: "Mielőtt a procihoz jöttem egy pékségben dolgoztam.", falseFact: "Gyerekkoromban egy gekkó volt a háziállatom.", falseFact2: "Az én ötletem volt a Coffee Roulette." },
+            { id: 20, name: "Boncsér Katalin", image: "https://inside2.process-solutions.hu:10443/PSFileManager/files/PSGalery/PSGalery_large/Boncser Katalin.JPG", trueFact: "Disszidálni akartunk családilag külföldre menekültként még gyerekkoromban.", falseFact: "Hét közben jelenleg 10-10 kilométert futok.", falseFact2: "Kíváncsiságból jelentkeztem a Mars One programra, kolonizálni a Marsot." }
         ];
 
         let score = 0;
         let canClickOption = true;
         let selectedEmployee = null;
-        let playerName = "";
         
-        const savedSolved = localStorage.getItem('payroll_solved_ids');
-        const solvedIds = savedSolved ? new Set(JSON.parse(savedSolved)) : new Set();
+        // Memóriabeli Set-ek a futási idő alatti állapotok követésére (frissítéskor törlődnek)
+        const solvedIds = new Set();
+        const correctIds = new Set();
 
-        const savedCorrect = localStorage.getItem('payroll_correct_ids');
-        const correctIds = savedCorrect ? new Set(JSON.parse(savedCorrect)) : new Set();
-
-        // Segédfüggvény a megoldott kép elérési útjának automatikus generálásához
-
-function generateSolvedImageUrl(originalUrl) {
+        function generateSolvedImageUrl(originalUrl) {
             try {
-                // 1. Dekódoljuk az URL-t (hogy a %20-ból újra szóköz legyen)
                 let decodedUrl = decodeURIComponent(originalUrl);
-                
-                // 2. Kivágjuk csak a fájlnevet a kiterjesztéssel együtt
                 let fullFileName = decodedUrl.substring(decodedUrl.lastIndexOf('/') + 1);
-                
-                // 3. Levágjuk az eredeti kiterjesztést (akár .JPG, akár .jpg)
                 let lastDotIndex = fullFileName.lastIndexOf('.');
                 let nameWithoutExtension = (lastDotIndex !== -1) ? fullFileName.substring(0, lastDotIndex) : fullFileName;
-                
-                // 4. Biztosítjuk, hogy a kimenet a Te mappádhoz igazodva kisbetűs .jpg legyen
-                let finalUrl = `solvedimages/${nameWithoutExtension}_solved.jpg`;
-                
-                console.log("Eredeti URL:", originalUrl);
-                console.log("Generált megoldott kép URL:", finalUrl);
-                
-                return finalUrl;
+                return `solvedimages/${nameWithoutExtension}_solved.jpg`;
             } catch (e) {
-                console.error("Hiba a kép nevének generálásakor:", e);
                 return originalUrl;
             }
-        }        window.onload = function() {
-            const savedName = localStorage.getItem('payroll_player_name');
-            const savedScore = localStorage.getItem('payroll_score');
-            
-            if(savedScore) {
-                score = parseInt(savedScore);
-                document.getElementById('score-val').innerText = score;
-            }
+        }
 
-            if (savedName) {
-                playerName = savedName;
-                document.getElementById('current-player-name').innerText = playerName;
-                
-                const loginBox = document.querySelector('.login-box');
-                loginBox.innerHTML = `
-                    <h2>Üdv újra, ${playerName}!</h2>
-                    <p>Készen állsz a mai tényekre?</p>
-                    <button onclick="startGame(true)">Folytatás</button>
-                `;
-            }
+        window.onload = function() {
+            // Indításkor azonnal felépítjük a tablót, és elindítjuk a háttérzenét az első kattintás után (böngésző szabályok miatt)
+            initTablo();
+            document.body.addEventListener('click', function startMusic() {
+                const music = document.getElementById('bg-music');
+                if (music && music.paused) {
+                    music.volume = 0.2;
+                    music.play().catch(err => console.log("Zene indítási hiba:", err));
+                }
+                document.body.removeEventListener('click', startMusic);
+            });
         };
 
-        function startGame(isReturning = false) {
-            if (!isReturning) {
-                const input = document.getElementById('username-input');
-                if (!input || input.value.trim() === "") {
-                    alert("Kérlek, adj meg egy nevet!");
-                    return;
-                }
-                
-                // 1. Kiszedjük a beírt nevet
-                const rawName = input.value.trim();
-                
-                // 2. Generálunk egy 3 jegyű véletlen számot
-                const randomNumber = Math.floor(100 + Math.random() * 900);
-                
-                // 3. Összefűzzük: pl. "Csilla#421"
-                playerName = `${rawName}#${randomNumber}`;
-                
-                // Elmentjük az egyedi nevet a böngészőbe
-                localStorage.setItem('payroll_player_name', playerName);
-            } else {
-                // Ha visszatérő játékos, a localStorage-ból már a "Név#szám" formátumot kapta meg a window.onload
-                // Így a playerName változóban már a teljes azonosító van.
-            }
-            
-            const music = document.getElementById('bg-music');
-            if (music) {
-                music.volume = 0.2;
-                music.play().catch(err => console.log("Zene hiba:", err));
-            }
-
-            // MÓDOSÍTVA: A kijelzőre csak a tiszta nevet írjuk ki a '#' karakter előtt elvágva (pl. "Csilla")
-            document.getElementById('current-player-name').innerText = playerName.split('#')[0];
-            
-            document.getElementById('login-overlay').classList.add('hidden');
-            initTablo();
-        }
-
-        function getTodayString() {
-            const today = new Date();
-            return today.getFullYear() + '-' + 
-                   String(today.getMonth() + 1).padStart(2, '0') + '-' + 
-                   String(today.getDate()).padStart(2, '0');
-        }
-
-function initTablo() {
+        function initTablo() {
             const tabloView = document.getElementById('tablo-view');
             tabloView.innerHTML = '';
-            const todayStr = getTodayString();
 
             employees.forEach(emp => {
                 const card = document.createElement('div');
@@ -483,40 +274,26 @@ function initTablo() {
 
                 const isSolved = solvedIds.has(emp.id);
                 const isCorrectlyGuessed = correctIds.has(emp.id);
-                const isPast = emp.date < todayStr;
-                const isToday = emp.date === todayStr;
 
-                // MÓDOSÍTOTT LOGIKA:
-                // Ha már megválaszolta, akkor kész (függetlenül a dátumtól)
                 if (isSolved) {
                     card.classList.add('completed');
-                } 
-                // Ha ma van, VAGY múltbeli, de még NINCS megoldva, akkor aktív és kattintható!
-                else if (isToday || (isPast && !isSolved)) {
+                } else {
                     card.classList.add('active');
                     card.onclick = (e) => handleCardClick(e, emp);
-                } 
-                // Minden más eset (jövőbeli állítások) zárva marad
-                else {
-                    card.classList.add('locked');
                 }
 
-                // A név láthatósága: Ha ma van, ha múltbeli, vagy ha már megoldotta, látszódjon a név
-                const displayName = (isToday || isPast || isSolved) ? emp.name : "???";
-                
-                // Ha helyesen találták el korábban, az új mappából tölti be a vicces képet
                 const cardImage = isCorrectlyGuessed ? generateSolvedImageUrl(emp.image) : emp.image;
 
                 let extraInfo = "";
                 if (isSolved) {
-                    extraInfo = `<div style="font-size: 0.75rem; color: var(--ps-blue); margin-top: 5px; font-style: italic; line-height: 1.1;">
+                    extraInfo = `<div style="font-size: 0.75rem; color: var(--ps-blue); margin-top: 5px; font-style: italic; line-height: 1.1; text-align:center;">
                                      "${emp.trueFact}"
                                  </div>`;
                 }
 
                 card.innerHTML = `
                     <img src="${cardImage}" alt="Kolléga">
-                    <span>${displayName}</span>
+                    <span>${emp.name}</span>
                     ${extraInfo}
                 `;
                 tabloView.appendChild(card);
@@ -532,19 +309,18 @@ function initTablo() {
             setTimeout(() => { openQuiz(emp); }, 100);
         }
 
-	function openQuiz(emp) {
+        function openQuiz(emp) {
             selectedEmployee = emp;
             canClickOption = true;
             document.getElementById('next-msg').style.visibility = "hidden";
             document.getElementById('quiz-name').innerText = emp.name;
             document.getElementById('quiz-image').src = emp.image;
             
-            // MÓDOSÍTVA: Most már 3 állítás kerül a tömbbe (1 igaz, 2 hamis)
             const choices = [
                 { text: emp.trueFact, isCorrect: true },
                 { text: emp.falseFact, isCorrect: false },
                 { text: emp.falseFact2, isCorrect: false }
-            ].sort(() => Math.random() - 0.5); // Véletlenszerű keverés
+            ].sort(() => Math.random() - 0.5);
 
             const container = document.getElementById('options-container');
             container.innerHTML = '';
@@ -561,6 +337,7 @@ function initTablo() {
             void overlay.offsetWidth; 
             overlay.classList.add('visible');
         }        
+
         function handleOptionClick(btn, isCorrect) {
             setTimeout(() => { handleGuess(btn, isCorrect); }, 100);
         }
@@ -578,10 +355,7 @@ function initTablo() {
                     if (correctSnd) { correctSnd.currentTime = 0; correctSnd.play(); }
                     score++;
                     document.getElementById('score-val').innerText = score;
-                    localStorage.setItem('payroll_score', score);
-                    
                     correctIds.add(selectedEmployee.id);
-                    localStorage.setItem('payroll_correct_ids', JSON.stringify(Array.from(correctIds)));
                 } else {
                     quizContainer.classList.add('shake-it');
                     if (wrongSnd) { wrongSnd.currentTime = 0; wrongSnd.play(); }
@@ -591,31 +365,7 @@ function initTablo() {
             }
 
             solvedIds.add(selectedEmployee.id);
-            localStorage.setItem('payroll_solved_ids', JSON.stringify(Array.from(solvedIds)));
 
-            // ÚJ: Aktuális dátum és idő formázása (ÉÉÉÉ.HH.NN. ÓÓ:PP:MP)
-            const now = new Date();
-            const timestampStr = now.getFullYear() + '.' + 
-                                 String(now.getMonth() + 1).padStart(2, '0') + '.' + 
-                                 String(now.getDate()).padStart(2, '0') + ' ' + 
-                                 String(now.getHours()).padStart(2, '0') + ':' + 
-                                 String(now.getMinutes()).padStart(2, '0') + ':' + 
-                                 String(now.getSeconds()).padStart(2, '0');
-
-            const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzwMicdKkBorzf4Q-E9ajNqW_LKOXgAydUpc7JRbyD2AZvwE-zWkK469LbA8EaGwItF/exec";
-
-            fetch(googleScriptUrl, {
-    method: "POST",
-    mode: "no-cors",
-    body: new URLSearchParams({
-        "player_name": playerName,
-        "employee_target": selectedEmployee.name,
-        "selected_option": btn.innerText,
-        "is_correct": isCorrect ? "Helyes" : "Helytelen",
-        "timestamp": timestampStr
-    }) // Nincs .toString(), nincs headers!
-}).catch(err => console.error("Mentési hiba:", err));
-			
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach(b => {
                 if (b.innerText === selectedEmployee.trueFact) b.classList.add('correct-reveal');
@@ -637,11 +387,6 @@ function initTablo() {
                 }, 400); 
             }
         };
-
-        function logout() {
-            localStorage.clear();
-            location.reload();
-        }    
     </script>
 </body>
 </html>
